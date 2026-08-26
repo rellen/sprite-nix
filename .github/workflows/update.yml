@@ -1,0 +1,69 @@
+name: Update sprite version
+
+# `schedule` alone is not enough. GitHub disables a scheduled workflow after 60
+# days with no repository activity. That is the most likely reason
+# jamiebrynes7/sprite-cli-nix stopped: its last push was 2026-04-03, the next
+# upstream release landed 2026-06-17, and 60 days had passed in between.
+# `workflow_dispatch` lets you wake it by hand; keepalive.yml keeps it armed.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-sprite
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Check for a new release
+        id: check
+        run: |
+          if ./scripts/update-version.sh --check; then
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+          else
+            rc=$?
+            # 10 means an update is available. Anything else is a real failure,
+            # and must not be laundered into "update needed".
+            if [ "$rc" -ne 10 ]; then
+              exit "$rc"
+            fi
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rewrite version.json
+        if: steps.check.outputs.needed == 'true'
+        run: ./scripts/update-version.sh
+
+      # Verify before main moves, not after. Only x86_64-linux is built here:
+      # a push made with GITHUB_TOKEN does not trigger build.yml, and the three
+      # hashes come from one manifest, so a Linux pass covers the fetch and the
+      # install. Run build.yml by hand to check macOS.
+      - name: Build and run it
+        if: steps.check.outputs.needed == 'true'
+        run: |
+          nix build --print-build-logs .#sprite
+          ./result/bin/sprite --version
+          test "$(jq -r .version version.json)" = "$(./result/bin/sprite --version | awk '{print $3}')"
+
+      - name: Commit and push
+        if: steps.check.outputs.needed == 'true'
+        run: |
+          version="$(jq -r .version version.json)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add version.json
+          git commit -m "chore: sprite $version"
+          git push
