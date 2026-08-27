@@ -1,29 +1,21 @@
 # The Sprites CLI (https://sprites.dev), built from the upstream release
 # manifest.
 #
-# Why this exists rather than `pkgs.sprite`:
+# Not `pkgs.sprite`: nixpkgs fetches a tarball path that upstream stopped
+# publishing, and its update.sh reads a frozen legacy address, so it never sees
+# a new release. jamiebrynes7/sprite-cli-nix reads the same dead addresses.
 #
-# nixpkgs fetches `client/v${version}/sprite-${os}-${arch}.tar.gz`. That layout
-# is frozen. Upstream moved its release channel to date versions, and a date
-# release publishes a raw per-platform binary plus a manifest.json, not a
-# tarball. Both nixpkgs' update.sh and the jamiebrynes7/sprite-cli-nix flake
-# resolve "latest" from client/release.txt, then fall back to client/rc.txt.
-# The first is gone and the second is pinned at the last legacy build. Neither
-# can ever see a date release.
-#
-# VERIFIED 2026-08-27 by direct curl:
+# VERIFIED 2026-08-27 by curl:
 #   client/latest                                -> 2026-08-21
 #   client/2026-08-21/manifest.json              -> 200
-#   client/rc.txt                                -> v0.0.1-rc48   (frozen)
+#   client/rc.txt                                -> v0.0.1-rc48  (frozen)
 #   client/release.txt                           -> 404
 #   client/2026-08-21/sprite-darwin-arm64.tar.gz -> 404
 #   client/v0.0.1-rc48/manifest.json             -> 404
+# No version publishes both forms.
 #
-# No version publishes both forms. The two schemes never overlap.
-#
-# version.json comes from scripts/update-version.sh. The sha256 in the upstream
-# manifest is the digest of the exact file fetchurl downloads, so the update
-# script needs no download at all.
+# version.json comes from scripts/update-version.sh. The manifest sha256 is the
+# digest of the file fetchurl fetches, so that script downloads nothing.
 {
   lib,
   stdenv,
