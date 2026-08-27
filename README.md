@@ -113,7 +113,8 @@ almost nothing, because the derivation compiles nothing.
 
 * The binary is Go 1.24 with `CGO_ENABLED=1`. Linux builds link glibc
   dynamically and get `autoPatchelfHook`. The macOS build links only `/usr/lib`
-  and system frameworks.
+  and system frameworks. Both paths are VERIFIED by CI: `build.yml` builds and
+  runs the binary on `ubuntu-latest` and on `macos-latest`.
 * `wrapProgram --set UPGRADE_CHECK false` suppresses the passive upgrade notice.
   Whether the current binary honours that variable is UNVERIFIED: an older build
   documented `UPGRADE_CHECK=true` as a cache *bypass*, and the current build
