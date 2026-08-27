@@ -80,7 +80,13 @@ stdenv.mkDerivation (finalAttrs: {
     description = "CLI for sprites.dev, stateful sandbox environments with checkpoint and restore";
     homepage = "https://sprites.dev";
     downloadPage = "https://docs.sprites.dev/cli/installation/";
+    # Upstream publishes no licence for this binary. The Fly.io terms of
+    # service grant no redistribution right and forbid sublicensing, so
+    # `unfree` (redistributable = false) is the supportable call.
+    # `unfreeRedistributable` would claim a permission nobody granted.
+    # Consequence: never push this derivation to a public binary cache.
     license = lib.licenses.unfree;
+    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
     mainProgram = "sprite";
     platforms = [
       "aarch64-darwin"

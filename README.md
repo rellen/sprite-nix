@@ -94,6 +94,21 @@ by hand. `keepalive.yml` commits a monthly timestamp. Whether a
 UNVERIFIED. If `update.yml` goes quiet for longer than upstream does, run it from
 the Actions tab and treat the keepalive as broken.
 
+## Licences
+
+The packaging here is MIT — see `LICENSE`. It covers the Nix expressions, the
+script, the workflows and this README.
+
+The `sprite` binary is a separate matter. This repository never contains it:
+`fetchurl` downloads it from sprites.dev at build time. Upstream publishes no
+licence for it, and the binary carries no licence string. Fly.io's terms of
+service grant no redistribution right and forbid sublicensing, so `meta.license`
+is `lib.licenses.unfree`, whose `redistributable` flag is `false`.
+
+**Do not push this derivation to a public binary cache.** That would
+redistribute a proprietary binary under no granted right. It would also save
+almost nothing, because the derivation compiles nothing.
+
 ## Notes
 
 * The binary is Go 1.24 with `CGO_ENABLED=1`. Linux builds link glibc
