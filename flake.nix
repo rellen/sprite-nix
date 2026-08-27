@@ -58,14 +58,16 @@
       apps = forAllSystems (system: {
         update = {
           type = "app";
-          program = "${(pkgsFor system).writeShellApplication {
-            name = "update-sprite-version";
-            runtimeInputs = with (pkgsFor system); [
-              curl
-              jq
-            ];
-            text = builtins.readFile ./scripts/update-version.sh;
-          }}/bin/update-sprite-version";
+          program = "${
+            (pkgsFor system).writeShellApplication {
+              name = "update-sprite-version";
+              runtimeInputs = with (pkgsFor system); [
+                curl
+                jq
+              ];
+              text = builtins.readFile ./scripts/update-version.sh;
+            }
+          }/bin/update-sprite-version";
         };
       });
 
@@ -79,13 +81,13 @@
             packages = with pkgs; [
               curl
               jq
-              nixfmt-rfc-style
+              nixfmt
             ];
           };
         }
       );
 
-      formatter = forAllSystems (system: (pkgsFor system).nixfmt-rfc-style);
+      formatter = forAllSystems (system: (pkgsFor system).nixfmt-tree);
 
       checks = forAllSystems (system: {
         sprite = self.packages.${system}.sprite;
