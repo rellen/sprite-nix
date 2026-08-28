@@ -21,7 +21,7 @@ wording carries the meaning there.
 To check a file:
 
 ```sh
-vale --config=$HOME/src/darwin-nix-config/.vale.ini README.md
+vale --config=$HOME/darwin-nix-config/.vale.ini README.md
 ```
 
 ## Comments
