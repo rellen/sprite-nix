@@ -42,9 +42,9 @@ Move to a new release:
 nix flake update sprite
 ```
 
-A workflow asks for an hourly check. GitHub throttles a `schedule:` cron, so it
+A workflow asks for an hourly check. GitHub throttles a `schedule:` job, so it
 really delivers about 7 runs a day. Measured over the first 24.4 hours: 8 runs,
-a mean gap of 3.5 hours, and never at the minute the cron names.
+a mean gap of 3.5 hours, and never at the minute the schedule names.
 
 Your machine moves only when you run the command above.
 
