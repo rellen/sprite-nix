@@ -42,8 +42,11 @@ Move to a new release:
 nix flake update sprite
 ```
 
-A workflow bumps this repository every hour. Your machine moves only when you
-run the command above.
+A workflow asks for an hourly check. GitHub throttles a `schedule:` cron, so it
+really delivers about 7 runs a day. Measured over the first 24.4 hours: 8 runs,
+a mean gap of 3.5 hours, and never at the minute the cron names.
+
+Your machine moves only when you run the command above.
 
 To bump this repository by hand, run `nix run .#update`.
 
