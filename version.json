@@ -1,17 +1,17 @@
 {
-  "version": "2026-09-02",
+  "version": "2026-10-20",
   "platforms": {
     "aarch64-darwin": {
       "asset": "macos-aarch64",
-      "hash": "sha256-KS6HskDmNQmfVqWB4mqwpRJjKorlQRvfoC3Z0Ba1eGU="
+      "hash": "sha256-K1BuaGDZM2VKF26rU1WlYV8gi7lAh8RLbk/Nfw4trEU="
     },
     "x86_64-linux": {
       "asset": "linux-x86_64",
-      "hash": "sha256-Px0UoqSIbpiZPHDJtpJwIjz7Y24qFDr+T437Z77btsc="
+      "hash": "sha256-0SSkCc/bcyHvswm5flFZkftbDn5fEZ5jYdf94qLUCC8="
     },
     "aarch64-linux": {
       "asset": "linux-aarch64",
-      "hash": "sha256-wgC4fskK2B6X3qcoXXJDmVJQm8QU7Aixov0D7cy0YSY="
+      "hash": "sha256-wklCt9euTfY0Iu/RHU3/7rw3Fuk5FpGL6KJa0IiE3Fw="
     }
   }
 }
