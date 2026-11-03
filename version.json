@@ -1,17 +1,17 @@
 {
-  "version": "2026-10-20-hotfix.1",
+  "version": "2026-11-03",
   "platforms": {
     "aarch64-darwin": {
       "asset": "macos-aarch64",
-      "hash": "sha256-PwqCYRBuq9BHaHsqELdeTrFIsMF3ONgqHRur2G7d9mg="
+      "hash": "sha256-cR1q85SAd6HD5HZYp0wdjn59MfvGKDRekMoyq06auWA="
     },
     "x86_64-linux": {
       "asset": "linux-x86_64",
-      "hash": "sha256-c0j1RlL7zK6nnX60tXJC5h89ZXOSfeqqFCfbRGHQorI="
+      "hash": "sha256-cxr0d+z3Mo/RiMZ7NkmHTJEHtvAJfCWIjQ3Req2CNSc="
     },
     "aarch64-linux": {
       "asset": "linux-aarch64",
-      "hash": "sha256-QPaJYk09BLcWC+6fSjVjgYvvqShmyfRmytr/vRxdDyI="
+      "hash": "sha256-yCyDv+0o5LZ8LGv2Owrsua3cTFaOzLau85nyG/zG1IY="
     }
   }
 }
